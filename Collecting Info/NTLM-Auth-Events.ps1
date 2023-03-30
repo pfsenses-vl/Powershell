@@ -1,4 +1,6 @@
+###########################################################################################################
 #This script collecting information about NTLM Auth from Domain Controllers Eventlog, and export it to CSV. 
+###########################################################################################################
 Import-Module ActiveDirectory
 $Domain = Get-ADDomain | Select DNSRoot, distinguishedName
 $Account = Get-ADUser ($env:UserName) |select SamAccountName
@@ -22,4 +24,4 @@ ForEach ($item in $DC){Invoke-Command -ComputerName "$item" {Get-WinEvent -LogNa
 12 {"CachedRemoteInteractive"; break;}
 13 {"CachedUnlock"; break;}
 default {"Other"; break;}}}},@{Label='Authentication';Expression={$_.Properties[10].Value}},@{Label='User Name';Expression={$_.Properties[5].Value}},@{Label='Client Name';Expression={$_.Properties[11].Value}},@{Label='Client Address';Expression={$_.Properties[18].Value}},@{Label='Server Name';Expression={$_.MachineName}} | sort @{Expression="Server Name";Descending=$false},
-@{Expression="Time";Descending=$true}} | Where-Object Authentication -eq "NTLM" |Select-Object * -ExcludeProperty PSComputerName, RunspaceID | Export-csv -Appen C:\Scripts\CSV\NTLM.csv}
+@{Expression="Time";Descending=$true}} | Where-Object Authentication -eq "NTLM" |Select-Object * -ExcludeProperty PSComputerName, RunspaceID | Export-csv -Append C:\Scripts\CSV\NTLM.csv}
