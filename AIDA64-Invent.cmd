@@ -1,0 +1,2 @@
+Rem Для работы скрипта, необходимо положить AIDA64 в \\example.local\Common\Inventory\
+\\example.local\Common\Inventory\aida64.exe /R \\example.local\Common\Inventory\reports\$HOSTNAME $MONTH $DATE /HW /HTML /SAFE /SILENT
