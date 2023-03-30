@@ -1,4 +1,6 @@
+############################################
 #Get Used Space for All hosts in selected OU
+############################################
 Import-Module ActiveDirectory
 $Winservers=(Get-ADComputer -Filter *  -searchbase "OU=Servers,DC=EXAMPLE,DC=ORG" -SearchScope 2).Name
 $Total=foreach ($item in $Winservers){Invoke-Command -ComputerName $item {Get-PSDrive -PSProvider FileSystem} | Select-Object PSComputerName,Name,@{Name="UsedSpace";Expression={$_.Used/1GB}}}
